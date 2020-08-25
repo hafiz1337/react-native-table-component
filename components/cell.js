@@ -43,6 +43,41 @@ export class Cell extends Component {
   }
 }
 
+export class MyCell extends Component {
+  static propTypes = {
+    style: ViewPropTypes.style,
+    textStyle: Text.propTypes.style,
+    borderStyle: ViewPropTypes.style
+  };
+
+  render() {
+    const { data, width, height, flex, style, textStyle, borderStyle, ...props } = this.props;
+    const borderTopWidth = (borderStyle && borderStyle.borderWidth) || 0;
+    const borderRightWidth = borderTopWidth;
+    const borderColor = (borderStyle && borderStyle.borderColor) || '#000';
+
+    return (
+      <View
+        style={[
+          {
+            borderTopWidth,
+            borderRightWidth,
+            borderColor
+          },
+          styles.cell,
+          width && { width },
+          height && { height },
+          flex && { flex },
+          !width && !flex && !height && !style && { flex: 1 },
+          style
+        ]}
+      >
+        {this.props.data}
+      </View>
+    );
+  }
+}
+
 const styles = StyleSheet.create({
   cell: { justifyContent: 'center' },
   text: { backgroundColor: 'transparent' }
